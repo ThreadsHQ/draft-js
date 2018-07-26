@@ -12978,6 +12978,12 @@ function getNodeLength(node) {
  * versions, we use the old IE API to create our selections.
  */
 function setDraftEditorSelection(selectionState, node, blockKey, nodeStart, nodeEnd) {
+
+  // This is a hack for Threads complex blocks, such as AttachmentSets.
+  if (window.shouldDisableProgrammaticSelectionChanges && window.shouldDisableProgrammaticSelectionChanges()) {
+    return null;
+  }
+
   // It's possible that the editor has been removed from the DOM but
   // our selection code doesn't know it yet. Forcing selection in
   // this case may lead to errors, so just bail now.
